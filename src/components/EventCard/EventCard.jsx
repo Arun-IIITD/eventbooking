@@ -2,31 +2,33 @@ import { useState } from "react";
 import BookingModal from "../BookingModal/BookingModal";
 
 function EventCard({ event }) {
+
   const [open, setOpen] = useState(false);
 
   return (
-
-
     <div className="event-card">
-  <h3>{event.eventName}</h3>
+      <h3>{event.eventName}</h3>
 
-  <p className="address">{event.address}</p>
-  <p className="location">{event.city}, {event.state}</p>
-  <p className="rating">⭐ {event.rating}</p>
+      <p className="address">{event.address}</p>
+      <p className="location">
+        {event.city}, {event.state}
+      </p>
+      <p className="rating">⭐ {event.rating}</p>
 
-  <button className="book-btn">
-    Book FREE Event
-  </button>
+      <button
+        className="book-btn"
+        onClick={() => setOpen(true)}
+      >
+        Book FREE Event
+      </button>
 
-  {open && <BookingModal event={event} close={() => setOpen(false)} />}
-</div>
-
-
-
-   
-
-
-
+      {open && (
+        <BookingModal
+          event={event}
+          close={() => setOpen(false)}
+        />
+      )}
+    </div>
   );
 }
 
