@@ -1,0 +1,16 @@
+[
+    {
+      "eventName": "Food Expo",
+      "rating": 4,
+      "address": "555 Main St, Austin, Texas",
+      "city": "Austin",
+      "state": "Texas"
+    },
+    {
+      "eventName": "Culinary Carnival",
+      "rating": 4.5,
+      "address": "280 Main St, Austin, Texas",
+      "city": "Austin",
+      "state": "Texas"
+    }
+  ]
