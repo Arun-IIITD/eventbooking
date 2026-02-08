@@ -16,6 +16,8 @@ function BookingModal({ event, close }) {
     };
   
     return (
+
+
       <div style={{ border: "1px solid black", padding: "10px" }}>
         <p>Today</p>
         <p>Morning</p>
@@ -29,6 +31,10 @@ function BookingModal({ event, close }) {
   
         <button onClick={close}>Close</button>
       </div>
+
+
+
+
     );
   }
   

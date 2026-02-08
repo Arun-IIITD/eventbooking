@@ -15,12 +15,10 @@ function EventCard({ event }) {
       </p>
       <p className="rating">⭐ {event.rating}</p>
 
-      <button
-        className="book-btn"
-        onClick={() => setOpen(true)}
-      >
-        Book FREE Event
-      </button>
+      <button className="book-btn" onClick={() => setOpen(true)}>
+  Book FREE Event
+</button>
+
 
       {open && (
         <BookingModal

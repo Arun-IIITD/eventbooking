@@ -53,7 +53,10 @@ function Events() {
 
   return (
     <div className="events-page">
-      <h1>{events.length} events available in {city}</h1>
+      <h1>
+        {events.length} events available in {city}
+      </h1>
+
 
       <div className="events-grid">
         {events.length === 0 ? (

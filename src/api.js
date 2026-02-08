@@ -15,8 +15,10 @@ export const getCities = async (state) => {
 };
 
 export const getEvents = async (state, city) => {
-  const res = await fetch(
-    `${BASE_URL}/events?state=${state}&city=${city}`
+  const response = await fetch(
+    `https://eventdata.onrender.com/events?state=${state}&city=${city}`
   );
-  return res.json();
+
+  return response.json(); // MUST return array directly
 };
+
