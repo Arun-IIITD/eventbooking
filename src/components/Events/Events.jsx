@@ -19,18 +19,34 @@ function Events() {
       return;
     }
 
-    getEvents(state, city)
-      .then((res) => {
-        // axios -> res.data
-        setEvents(Array.isArray(res.data) ? res.data : []);
+    // getEvents(state, city)
+    //   .then((res) => {
+    //     // axios -> res.data
+        
+    //     setEvents(Array.isArray(res.data) ? res.data : []);
+    //   })
+    //   .catch((err) => {
+    //     console.error("Error fetching events:", err);
+    //     setEvents([]);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+
+
+     getEvents(state, city)
+      .then((data) => {
+        setEvents(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
         console.error("Error fetching events:", err);
         setEvents([]);
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
+  
+
+
+
   }, [state, city]);
 
   if (loading) return <p>Loading events...</p>;
