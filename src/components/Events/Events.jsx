@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getEvents } from "../../api";
 import EventCard from "../EventCard/EventCard";
@@ -9,45 +9,22 @@ function Events() {
   const city = searchParams.get("city");
 
   const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // guard against missing query params
-    if (!state || !city) {
+  const fetchEvents = async () => {
+    if (!state || !city) return;
+
+    setLoading(true);
+    try {
+      const data = await getEvents(state, city);
+      setEvents(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Error fetching events:", err);
       setEvents([]);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    // getEvents(state, city)
-    //   .then((res) => {
-    //     // axios -> res.data
-        
-    //     setEvents(Array.isArray(res.data) ? res.data : []);
-    //   })
-    //   .catch((err) => {
-    //     console.error("Error fetching events:", err);
-    //     setEvents([]);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
-
-
-     getEvents(state, city)
-      .then((data) => {
-        setEvents(Array.isArray(data) ? data : []);
-      })
-      .catch((err) => {
-        console.error("Error fetching events:", err);
-        setEvents([]);
-      })
-      .finally(() => setLoading(false));
-  
-
-
-
-  }, [state, city]);
+  };
 
   if (loading) return <p>Loading events...</p>;
 
@@ -57,16 +34,16 @@ function Events() {
         {events.length} events available in {city}
       </h1>
 
+      <button id="searchBtn" onClick={fetchEvents}>
+        Search
+      </button>
 
       <div className="events-grid">
         {events.length === 0 ? (
           <p>No events found.</p>
         ) : (
           events.map((event) => (
-            <EventCard
-              key={event.eventName}   // ideally backend should send an id
-              event={event}
-            />
+            <EventCard key={event.eventName} event={event} />
           ))
         )}
       </div>
