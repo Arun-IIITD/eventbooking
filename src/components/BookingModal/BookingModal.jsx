@@ -1,19 +1,19 @@
 function BookingModal({ event, close }) {
 
-    const book = (time) => {
-      const existing = JSON.parse(localStorage.getItem("bookings")) || [];
+    // const book = (time) => {
+    //   const existing = JSON.parse(localStorage.getItem("bookings")) || [];
   
-      const booking = {
-        eventName: event.eventName,
-        city: event.city,
-        state: event.state,
-        timeSlot: time,
-        date: new Date().toDateString(),
-      };
+    //   const booking = {
+    //     eventName: event.eventName,
+    //     city: event.city,
+    //     state: event.state,
+    //     timeSlot: time,
+    //     date: new Date().toDateString(),
+    //   };
   
-      localStorage.setItem("bookings", JSON.stringify([...existing, booking]));
-      close();
-    };
+    //   localStorage.setItem("bookings", JSON.stringify([...existing, booking]));
+    //   close();
+    // };
   
     return (
 
