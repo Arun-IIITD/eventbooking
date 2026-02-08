@@ -8,6 +8,9 @@ function SearchBar() {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
 
+  const [showStates, setShowStates] = useState(false);
+  const [showCities, setShowCities] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,48 +20,63 @@ function SearchBar() {
   useEffect(() => {
     if (state) {
       getCities(state).then(setCities);
-      setCity(""); // 🔥 RESET city when state changes
+      setCity("");
     }
   }, [state]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSearch = () => {
     if (state && city) {
       navigate(`/events?state=${state}&city=${city}`);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="search-bar">
-      <div id="state" className="dropdown">
-        <select
-          value={state}                      // ✅ CONTROLLED
-          onChange={(e) => setState(e.target.value)}
-        >
-          <option value="">Select State</option>
-          {states.map((s) => (
-            <option key={s} value={s}>{s}</option>
-          ))}
-        </select>
+    <div className="search-bar">
+
+      {/* STATE DROPDOWN */}
+      <div id="state" onClick={() => setShowStates(!showStates)}>
+        {state || "Select State"}
+        {showStates && (
+          <ul>
+            {states.map((s) => (
+              <li
+                key={s}
+                onClick={() => {
+                  setState(s);
+                  setShowStates(false);
+                }}
+              >
+                {s}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      <div id="city" className="dropdown">
-        <select
-          value={city}                       // ✅ CONTROLLED
-          onChange={(e) => setCity(e.target.value)}
-          disabled={!state}                  // ✅ UX + safety
-        >
-          <option value="">Select City</option>
-          {cities.map((c) => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
+      {/* CITY DROPDOWN */}
+      <div id="city" onClick={() => state && setShowCities(!showCities)}>
+        {city || "Select City"}
+        {showCities && (
+          <ul>
+            {cities.map((c) => (
+              <li
+                key={c}
+                onClick={() => {
+                  setCity(c);
+                  setShowCities(false);
+                }}
+              >
+                {c}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      <button type="submit" id="searchBtn" className="search-btn">
+      <button id="searchBtn" onClick={handleSearch}>
         Search
       </button>
-    </form>
+    </div>
   );
 }
 
