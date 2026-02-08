@@ -2,8 +2,9 @@ import { useState } from "react";
 import BookingModal from "../BookingModal/BookingModal";
 
 function EventCard({ event }) {
-
   const [open, setOpen] = useState(false);
+
+  if (!event) return null;
 
   return (
     <div className="event-card">
@@ -16,16 +17,10 @@ function EventCard({ event }) {
       <p className="rating">⭐ {event.rating}</p>
 
       <button className="book-btn" onClick={() => setOpen(true)}>
-  Book FREE Event
-</button>
+        Book FREE Event
+      </button>
 
-
-      {open && (
-        <BookingModal
-          event={event}
-          close={() => setOpen(false)}
-        />
-      )}
+      {open && <BookingModal event={event} close={() => setOpen(false)} />}
     </div>
   );
 }

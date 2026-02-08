@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getEvents } from "../../api";
 import EventCard from "../EventCard/EventCard";
@@ -11,41 +11,28 @@ function Events() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchEvents = async () => {
+  useEffect(() => {
     if (!state || !city) return;
 
     setLoading(true);
-    try {
-      const data = await getEvents(state, city);
-      setEvents(Array.isArray(data) ? data : []);
-    } catch (err) {
-      console.error("Error fetching events:", err);
-      setEvents([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    getEvents(state, city)
+      .then((data) => {
+        setEvents(Array.isArray(data) ? data : []);
+      })
+      .catch(() => setEvents([]))
+      .finally(() => setLoading(false));
+  }, [state, city]);
 
   if (loading) return <p>Loading events...</p>;
 
   return (
     <div className="events-page">
-      <h1>
-        {events.length} events available in {city}
-      </h1>
-
-      <button id="searchBtn" onClick={fetchEvents}>
-        Search
-      </button>
+      <h1>{events.length} events available in {city}</h1>
 
       <div className="events-grid">
-        {events.length === 0 ? (
-          <p>No events found.</p>
-        ) : (
-          events.map((event) => (
-            <EventCard key={event.eventName} event={event} />
-          ))
-        )}
+        {events.map((event) => (
+          <EventCard key={event.eventName} event={event} />
+        ))}
       </div>
     </div>
   );
